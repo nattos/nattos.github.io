@@ -1,0 +1,2 @@
+class i extends AudioWorkletProcessor{constructor(){super(),this.processingPort=null,this.port.onmessage=s=>{s.data.type==="init"&&(this.processingPort=s.data.port)}}process(s,p,u){if(!this.processingPort)return!0;const r=s[0];if(r&&r.length>0){const e=[],o=[];for(let t=0;t<r.length;t++){const n=new Float32Array(r[t]);e.push(n),o.push(n.buffer)}this.processingPort.postMessage({type:"audio",payload:{buffer:e,currentTime,sampleRate}},o)}return!0}}registerProcessor("audio-capture-processor",i);
+//# sourceMappingURL=audio-capture.worklet-xDDJtosv.js.map
