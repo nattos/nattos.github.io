@@ -1099,7 +1099,7 @@ void ValidateContextState()
 	assert( glBool[ 3 ] == GL_TRUE );
 #endif
 }
-`,e=`////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+`,n=`////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FFGL.h
 //
 // FreeFrame is an open-source cross-platform real-time video effects plugin system.
@@ -1761,7 +1761,7 @@ void SetLogCallback( PFNLog logCallback );
 #endif
 
 #endif
-`,n=`////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+`,e=`////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FFGLLib.h
 //
 // FreeFrame is an open-source cross-platform real-time video effects plugin system.
@@ -4435,6 +4435,20 @@ private:
 inline float int_bits_to_float(int v) { float f; std::memcpy(&f, &v, 4); return f; }
 inline int float_bits_to_int(float f) { int v; std::memcpy(&v, &f, 4); return v; }
 
+// PRNG hash (lowbias32)
+inline int _prng_hash(int x_in) {
+  uint32_t x = static_cast<uint32_t>(x_in);
+  x ^= x >> 16u;
+  x *= 0x45d9f3bu;
+  x ^= x >> 16u;
+  x *= 0x45d9f3bu;
+  x ^= x >> 16u;
+  return static_cast<int>(x);
+}
+inline float _prng_hash_to_float(int x) {
+  return static_cast<float>(static_cast<uint32_t>(_prng_hash(x))) / 4294967295.0f;
+}
+
 template <typename T, typename F> inline auto applyUnary(T val, F fn) {
   return fn(val);
 }
@@ -6028,6 +6042,20 @@ inline float4x4 quat_to_mat4(float4 q) {
     float4(0, 0, 0, 1));
 }
 
+// PRNG hash (lowbias32)
+inline int _prng_hash(int x_in) {
+  uint x = as_type<uint>(x_in);
+  x ^= x >> 16u;
+  x *= 0x45d9f3bu;
+  x ^= x >> 16u;
+  x *= 0x45d9f3bu;
+  x ^= x >> 16u;
+  return as_type<int>(x);
+}
+inline float _prng_hash_to_float(int x) {
+  return float(as_type<uint>(_prng_hash(x))) / 4294967295.0f;
+}
+
 // Color mix (alpha-over compositing: dst=a, src=b)
 inline float4 color_mix_impl(float4 dst, float4 src) {
   float outA = src.w + dst.w * (1.0f - src.w);
@@ -6035,5 +6063,5 @@ inline float4 color_mix_impl(float4 dst, float4 src) {
   float3 rgb = (src.xyz * src.w + dst.xyz * dst.w * (1.0f - src.w)) / outA;
   return float4(rgb, outA);
 }
-`,_={"ffgl/FFGL.cpp":t,"ffgl/FFGL.h":e,"ffgl/FFGLLib.h":n,"ffgl/FFGLLog.cpp":r,"ffgl/FFGLLog.h":a,"ffgl/FFGLPlatform.h":i,"ffgl/FFGLPluginInfo.cpp":s,"ffgl/FFGLPluginInfo.h":o,"ffgl/FFGLPluginInfoData.cpp":l,"ffgl/FFGLPluginManager.cpp":u,"ffgl/FFGLPluginManager.h":d,"ffgl/FFGLPluginSDK.cpp":f,"ffgl/FFGLPluginSDK.h":c,"ffgl/FFGLThumbnailInfo.cpp":m,"ffgl/FFGLThumbnailInfo.h":p,"ffgl-plugin.mm":F,"InteropTexture.m":h,"InteropTexture.h":g,"intrinsics.incl.h":I,"msl-intrinsics.incl.h":T};export{_ as FFGL_ASSETS};
-//# sourceMappingURL=ffgl-assets-C6rr6Wq8.js.map
+`,_={"ffgl/FFGL.cpp":t,"ffgl/FFGL.h":n,"ffgl/FFGLLib.h":e,"ffgl/FFGLLog.cpp":r,"ffgl/FFGLLog.h":a,"ffgl/FFGLPlatform.h":i,"ffgl/FFGLPluginInfo.cpp":s,"ffgl/FFGLPluginInfo.h":o,"ffgl/FFGLPluginInfoData.cpp":l,"ffgl/FFGLPluginManager.cpp":u,"ffgl/FFGLPluginManager.h":d,"ffgl/FFGLPluginSDK.cpp":f,"ffgl/FFGLPluginSDK.h":c,"ffgl/FFGLThumbnailInfo.cpp":m,"ffgl/FFGLThumbnailInfo.h":p,"ffgl-plugin.mm":F,"InteropTexture.m":h,"InteropTexture.h":g,"intrinsics.incl.h":I,"msl-intrinsics.incl.h":T};export{_ as FFGL_ASSETS};
+//# sourceMappingURL=ffgl-assets-62uhs_m8.js.map
